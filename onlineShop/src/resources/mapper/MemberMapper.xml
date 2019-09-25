@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "httpz://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--映射器-->
+<mapper namespace="com.dao.MemberDao">
+    <!--将数据库member表映射到memberResultMap中 类型为Member -->
+    <resultMap id="memberResultMap" type="Member">
+        <id property="memId" column="memId"/>
+        <result property="memName" column="memName"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <result property="password" column="password"/>
+        <result property="tel" column="tel"/>
+    </resultMap>
+
+    <!--sql语句-->
+    <!--实现memDao的增删改查抽象方法-->
+
+    <insert id="addMember" parameterType="Member">
+        insert into member(memName,password) value (#{memName},#{password})
+    </insert>
+
+    <delete id="deleteMemberById" parameterType="int">
+        delete from member where memId=#{memId}
+    </delete>
+
+    <update id="updateMember" parameterType="Member">
+        update member set memName=#{memName},sex=#{sex},address=#{address},password=#{password},tel=#{tel}
+    </update>
+
+    <select id="queryById" parameterType="int" resultType="Member">
+        select * from member where memId=#{memId}
+    </select>
+
+    <select id="queryAllMember" resultMap="memberResultMap">
+        select * from member
+    </select>
+
+    <select id="queryByName" resultType="Member" parameterType="String">
+        select * from member where memName=#{memName}
+    </select>
+
+    <!--参数类型和返回类型必须指定-->
+    <select id="countInShopCart" parameterType="String" resultType="int">
+        select count(*) from shopcart where memName=#{memName}
+    </select>
+
+
+
+</mapper>

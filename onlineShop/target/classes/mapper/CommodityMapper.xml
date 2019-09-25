@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "httpz://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--映射器-->
+<mapper namespace="com.dao.CommodityDao">
+    <!--将数据库member表映射到memberResultMap中 类型为Member -->
+    <resultMap id="CommodityResultMap" type="Commodity">
+        <id property="comId" column="comId"/>
+        <result property="introduce" column="introduce"/>
+        <result property="basicPrice" column="basicPrice"/>
+        <result property="currentPrice" column="currentPrice"/>
+        <result property="count" column="count"/>
+        <result property="imgUrl" column="imgUrl"/>
+
+    </resultMap>
+
+    <!--sql语句-->
+    <!--实现memDao的增删改查抽象方法-->
+
+    <delete id="delete" parameterType="int">
+        delete from commodity where comId=#{comId}
+    </delete>
+    <select id="queryAllCommodity" resultMap="CommodityResultMap">
+        select * from commodity
+    </select>
+
+    <select id="searchCommodity" parameterType="String" resultMap="CommodityResultMap">
+        select * from commodity where introduce like "%"#{introduce}"%"
+    </select>
+
+    <select id="queryById" parameterType="int" resultType="Commodity">
+        select * from commodity where comId=#{comId}
+    </select>
+
+    <!--修改商品信息-->
+    <update id="updateCommodity" parameterType="Commodity">
+        update commodity set introduce=#{introduce},basicPrice=#{basicPrice},currentPrice=#{currentPrice},
+        count=#{count},imgUrl=#{imgUrl} where comId=#{comId}
+    </update>
+
+    <insert id="addCommodity" parameterType="Commodity">
+        insert into commodity(introduce,basicPrice,currentPrice,count,imgUrl) value(#{introduce},#{basicPrice},
+        #{currentPrice},#{count},#{imgUrl})
+    </insert>
+</mapper>

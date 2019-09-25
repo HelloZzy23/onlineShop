@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "httpz://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--映射器-->
+<mapper namespace="com.dao.ShopCartDao">
+    <!--将数据库member表映射到memberResultMap中 类型为Member -->
+    <resultMap id="shopCartResultMap" type="ShopCart">
+        <id property="id" column="id"/>
+        <result property="memName" column="memName"/>
+        <result property="buyCount" column="buyCount"/>
+        <result property="imgUrl" column="imgUrl"/>
+        <result property="basicPrice" column="basicPrice"/>
+        <result property="currentPrice" column="currentPrice"/>
+        <result property="introduce" column="introduce"/>
+    </resultMap>
+
+    <!--sql语句-->
+    <!--实现memDao的增删改查抽象方法-->
+
+    <select id="queryByName" parameterType="String" resultMap="shopCartResultMap">
+        select * from shopcart where memName=#{memName}
+    </select>
+
+    <delete id="deleteCommodityById" parameterType="int">
+        delete from shopCart where id=#{id}
+    </delete>
+
+    <insert id="addCommodity" parameterType="ShopCart">
+        insert into shopCart(memName,buyCount,imgUrl,basicPrice,currentPrice, introduce)
+        value(#{memName},#{buyCount},#{imgUrl},#{basicPrice},#{currentPrice},#{introduce})
+    </insert>
+
+
+
+</mapper>
